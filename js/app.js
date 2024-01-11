@@ -1,16 +1,17 @@
 import React, {useState} from "react";
 import { createRoot } from "react-dom/client";
 
-import CarsManager from './CarsManager';
-import AddCar from "./AddCar";
-
+import MapFrame from "./MapFrame";
 
 function App() {
     const [cars, setCars] = useState(null);
     return(
         <>
-            <AddCar cars={cars} setCars={setCars}/>
-            <CarsManager cars={cars} setCars={setCars}/>
+            <img
+                src={'./assets/tp_logo.png'}
+                alt="Trip Planner Logo"
+            />
+            <MapFrame/>
         </>
         )
 
