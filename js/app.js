@@ -6,17 +6,47 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'react-bootstrap-country-select/dist/react-bootstrap-country-select.css';
 
 
-function App() {
-    const [selectedCountry, setSelectedCountry] = useState("");
+const  App = () => {
+    const [selectedCountry, setSelectedCountry] = useState({name: ""});
+    console.log(selectedCountry);
 
     const handleCountryChange = (country) => {
         setSelectedCountry(country);
+        console.log(`app.js line:15 country:`);
+        console.log(country);
+        console.log(`app.js line:17 selectedCountry`);
         console.log(selectedCountry);
     };
 
+    function SelCountryDisplay(){
+        if (selectedCountry !== null){
+            return(
+                <>
+                    <p>{selectedCountry.name}</p>
+                    <MapFrame country={selectedCountry.name}/>
+                </>
+
+            )
+        } else{
+            return(
+                <>
+                    <MapFrame country={"Poland"}/>
+                </>
+                )
+        }
+
+    }
+
     const handleTextChange = (country) => {
+        if (selectedCountry.name !== null) {
+            selectedCountry.name = "";
+        }
+        console.log(`app.js line:44 handleTextChange`);
         console.log(country);
-    };
+        }
+
+
+
     return(
         <>
             <img
@@ -31,11 +61,10 @@ function App() {
                     flush={false}
                 />
             </div>
-            <p>{selectedCountry.name}</p>
-            <MapFrame country={selectedCountry}/>
+            <SelCountryDisplay />
         </>
         )
-}
+};
 
 const container = document.getElementById("app");
 const root = createRoot(container);
