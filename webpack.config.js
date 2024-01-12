@@ -35,6 +35,11 @@ module.exports = {
         exclude: /node_modules/,
         loader: "babel-loader",
       },
+      // Rule for processing CSS files
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
     ],
   },
   plugins: [
