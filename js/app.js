@@ -1,51 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { createRoot } from "react-dom/client";
 import MapFrame from "./MapFrame";
 import CountrySelect from "react-bootstrap-country-select";
 import 'bootstrap/dist/css/bootstrap.css';
 import 'react-bootstrap-country-select/dist/react-bootstrap-country-select.css';
 
-
 const  App = () => {
-    const [selectedCountry, setSelectedCountry] = useState({name: ""});
-    console.log(selectedCountry);
+    const [selectedCountry, setSelectedCountry] = useState({name: "Poland", alpha3: "pol"});
 
     const handleCountryChange = (country) => {
         setSelectedCountry(country);
-        console.log(`app.js line:15 country:`);
-        console.log(country);
-        console.log(`app.js line:17 selectedCountry`);
-        console.log(selectedCountry);
+    };
+    const handleTextChange = (country) => {
+        setSelectedCountry({ name: "" });
+        console.log(`Text changed: ${country}`);
     };
 
-    function SelCountryDisplay(){
-        if (selectedCountry !== null){
-            return(
-                <>
-                    <p>{selectedCountry.name}</p>
-                    <MapFrame country={selectedCountry.name}/>
-                </>
-
-            )
-        } else{
-            return(
-                <>
-                    <MapFrame country={"Poland"}/>
-                </>
-                )
-        }
-
-    }
-
-    const handleTextChange = (country) => {
-        if (selectedCountry.name !== null) {
-            selectedCountry.name = "";
-        }
-        console.log(`app.js line:44 handleTextChange`);
-        console.log(country);
-        }
-
-
+    const renderCountryDisplay = () => {
+        const countryName = selectedCountry ? selectedCountry.name : "Poland";
+        const countryCode = selectedCountry ? selectedCountry.alpha3 : "pol";
+        console.log("countryName", countryName);
+        console.log("countryName", countryCode);
+        return (
+            <div>
+                <p>{countryName}</p>aA
+                <MapFrame country={countryCode} />
+            </div>
+        );
+    };
 
     return(
         <>
@@ -61,7 +43,8 @@ const  App = () => {
                     flush={false}
                 />
             </div>
-            <SelCountryDisplay />
+            {renderCountryDisplay()}
+            <div style={{height:"300px"}}></div>
         </>
         )
 };
@@ -70,4 +53,4 @@ const container = document.getElementById("app");
 const root = createRoot(container);
 root.render(<App />);
 
-//                {/*valueAs={name}*/}
+// {/*valueAs={name}*/}

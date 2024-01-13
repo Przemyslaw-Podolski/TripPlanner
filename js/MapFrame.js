@@ -1,19 +1,18 @@
 import React, {useState, useEffect} from 'react'
 import { GoogleMap, Marker, useJsApiLoader, Polyline } from '@react-google-maps/api';
-import CountryBorder from "./CountryBorder";
+import CountryBorder, { getLatLngBounds } from "./CountryBorder";
 
 const containerStyle = {
     width: '1100px',
     height: '800px'
 };
 
-
 const center = {
     lat: 50.60749435424805,
     lng: 16.77910041809082
 };
 
-
+//example of markers to add on a map.
 const markers = [
     {lat: 50.63, lng: 16.707},
     {lat: 50.62, lng: 16.714},
@@ -21,78 +20,104 @@ const markers = [
     {lat: 50.59, lng: 16.742}
 ]
 
-
-
+const polandBound = [
+    {lat: 49.0273953314, lng: 14.0745211117},
+    {lat: 54.8515359564, lng: 14.0745211117},
+    {lat: 49.0273953314, lng: 24.0299857927},
+    {lat: 54.8515359564, lng: 24.0299857927},
+]
 
 const  MapFrame = (country) => {
-        const {isLoaded} = useJsApiLoader({
-            id: 'google-map-script',
-            googleMapsApiKey: process.env.API_KEY //API KEY as environmental variable
-        })
+    const {isLoaded,loadError} = useJsApiLoader({
+        id: 'google-map-script',
+        googleMapsApiKey: process.env.API_KEY //API KEY as environmental variable
+    })
+    const [map, setMap] = React.useState(null);
+    const [myBorders, setMyBorders] = React.useState(null);
+    const [myBorderType, setMyBorderType] = React.useState("Polygon");
+    const [myBounds, setMyBounds] = useState(polandBound); //getLatLngBounds funkcja zwracajaca maxymalne zakresy kraju
+    const [countryCenter, setCountryCenter] = React.useState({lat: 50.60749435424805, lng: 16.77910041809082});
+
+   const onLoad = React.useCallback(
+        (mapInstance) => {
+            setMap(mapInstance);
+        },
+        [setMap]
+    );
+
+    const onUnmount = React.useCallback(function callback(map) {
+        setMap(null)
+    }, [setMap])
+    CountryBorder(setMyBorders, country, setCountryCenter, setMyBorderType);
+
+    useEffect(() => {
+        setMyBounds(getLatLngBounds(myBorders, myBorderType));
+    }, [myBorders, myBorderType]);
 
 
-        const [map, setMap] = React.useState(null)
-        const [myBorders, setMyBorders] = React.useState(null)
-        const [myBorderType, setMyBorderType] = React.useState("Polygon")
-        const [countryCenter, setCountryCenter] = React.useState({
-            lat: 50.60749435424805,
-            lng: 16.77910041809082
-        })
+    useEffect(() => {
+        /*
+        console.log("MapFrame line:67 myBorder", myBorders)
+        console.log("MapFrame line:68 getLatLngBounds", getLatLngBounds(myBorders, myBorderType))
+        setMyBounds(getLatLngBounds(myBorders, myBorderType));
+        console.log("MapFrame line:70 myBounds", myBounds)
+        console.log("map && myBounds.length > 0:", map && myBounds.length > 0);
+        console.log("map", map);
+        */
 
+        if (!map || !myBounds || myBounds.length < 1) {
+            return;
+        }
+        // Calculate bounds
+        const bounds = new window.google.maps.LatLngBounds();
+        myBounds.forEach(marker => {
+            bounds.extend(new window.google.maps.LatLng(marker.lat, marker.lng));
+        });
+        // Fit the bounds to the map
+        console.log("Bounds before fitBounds:", bounds);
+        map.fitBounds(bounds);
 
-        const onUnmount = React.useCallback(function callback(map) {
-            setMap(null)
-        }, [])
+    }, [map, myBounds]);
 
-        CountryBorder(setMyBorders, country, setCountryCenter, setMyBorderType);
 
     const RenderCountry = () => {
         if (myBorderType === "Polygon"){
             //Return  Polyline component for countries Polygon border
             return (<Polyline visible={true} editable={false} draggable={false} path={myBorders}/>);
         } else {
+
             //Return multiple Polyline components for countries with Multi Polygon border
             return ( myBorders.map(element => (<Polyline key={element[0][0].lat*1e+12} visible={true} editable={false} draggable={false} path={element[0]}/>)));
         }
     }
 
-
-        return isLoaded ? (
-
-            <GoogleMap
-                mapContainerStyle={containerStyle}
-                center={countryCenter}
-                zoom={6}
-            >
-                { /* Child components, such as markers, info windows, etc. */}
-                <Marker position={center}/> { /* Shows red marker in center of the map */}
-                {markers.map((el) => (<Marker key={el.lat} position={el}/>))}
-                <RenderCountry />
-                <>
-                    onUnmount={onUnmount}
-                </>
-            </GoogleMap>
-        ) : null;
+    if (loadError) {
+        return <div>Error loading Google Maps API</div>;
     }
 
+    return isLoaded ? (
 
-export default MapFrame; //Using memo improves performance for components that will look the same
-
-
-/*
-Do rozkminy
-
-    const onLoad = React.useCallback(function callback(map) {
-        // This is just an example of getting and using the map instance!!! don't just blindly copy!
-        const bounds = new window.google.maps.LatLngBounds(center);
-        map.fitBounds(bounds);
-        map.setZoom(10);
-
-        setMap(map)
-    }, [])
-)
-          JSX
-          <>
+        <GoogleMap
+            mapContainerStyle={containerStyle}
+            center={countryCenter}
+            zoom={4}
+            mapTypeId={"terrain"}
             onLoad={onLoad}
-          </>
- */
+            onUnmount={onUnmount}
+            gestureHandling={'auto'}
+        >
+            { /* Child components, such as markers, info windows, etc. */}
+            <Marker position={center}/> { /* Shows red marker in center of the map */}
+            {markers.map((el) => (<Marker key={el.lat} position={el}/>))}
+            <RenderCountry />
+
+        </GoogleMap>
+    ) : null;
+}
+
+export default React.memo(MapFrame); //Using memo improves performance for components that will look the same
+
+
+//Wyjebuje wszystko po wybraniu kraju
+//     onLoad={onLoad}
+//      center={countryCenter}
