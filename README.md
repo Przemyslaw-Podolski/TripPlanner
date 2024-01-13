@@ -8,7 +8,7 @@
 ## Features:
 
 ## 1. User Nationality Selection
-- Utilize an API that provides information about nationalities, to provide information about requirements before entering destination country. (Visa List API)
+- Utilize an API that provides information about nationalities, to provide information about requirements before entering the destination country. (Visa List API)
 
 ## 2. Destination Country Selection
 - Use an API that provides information about countries, such as [REST Countries](https://restcountries.com/).
@@ -20,8 +20,8 @@
 - Implement the functionality to add places to visit.
 
 ## 6. Displaying the trip plan on a Map
-- Use [React Leaflet](https://react-leaflet.js.org/) for integrating maps with React.
-- Add markers on the map for the places in the itinerary.
+- Use [react-google-maps/api]([https://react-leaflet.js.org/](https://tomchentw.github.io/react-google-maps/)) for integrating maps with React.
+- Add markers on the map for the places in the itinerary. Draw the border of a destination country. 
 
 
 ## App Name
@@ -44,11 +44,13 @@
 - React Leaflet (For maps)
 
 ## Used APIs
+- React Google Maps API (For map and markers on it)
 - REST Countries API (For nationality and country information)
 - Open Trip Map API (For tourist attractions information)
 - Disease.sh API (For vaccination information)
 
 ## Features
+- Registration and Login
 - User nationality and destination country selection
 - Display of tourist attractions
 - Creating a travel itinerary
