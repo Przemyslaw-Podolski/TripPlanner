@@ -1,4 +1,4 @@
-![Trip_Planner_Logo](C:\repos\TripPlanner\assets\tp_logo.png)
+![Trip_Planner_Logo](./assets/tp_logo.png)
 
 # Travel Planning App
 
