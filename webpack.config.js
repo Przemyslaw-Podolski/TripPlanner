@@ -6,6 +6,9 @@ module.exports = {
   mode: "none",
   entry: `./js/app.js`,
   devtool: "inline-source-map",
+  resolve: {
+    extensions: ['.js', '.jsx', '.json'],
+  },
   output: {
     filename: "out.js",
     path: path.resolve(__dirname, "build"),
@@ -31,9 +34,14 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        loader: "babel-loader",
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env', '@babel/preset-react']
+          }
+        }
       },
       // Rule for processing CSS files
       {

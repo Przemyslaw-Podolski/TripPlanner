@@ -9,15 +9,13 @@ function fetchJSON(url) {
 
 export default function CountryBorder(setBorder, country, setCountryCenter, setMyBorderType){
     useEffect(() => {
-            fetchJSON('../assets/ne_50m_admin_0_countries.geojson')
+        fetchJSON('../assets/ne_10m_admin_0_countries.geojson')
             .then(data => {
                 data.features.forEach(function(feature) {
-                    const countryName = feature.properties.NAME;
+                    const countryName = feature.properties.NAME; //To be used when needed
                     const countryCode = feature.properties.ADM0_A3.toLowerCase();
-                    var borderShape = [];
+                    let borderShape = [];
 
-
-                    //console.log(countryName, "Zimbabwe. Check if equal: ", countryName === "Zimbabwe", "Zimbabwe. Check if different: ", countryName !== "Zimbabwe");
                     if (countryCode === country.country){
                         setCountryCenter({
                             lat: feature.properties.LABEL_Y,

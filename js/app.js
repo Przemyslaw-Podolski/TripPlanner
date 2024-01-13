@@ -4,6 +4,9 @@ import MapFrame from "./MapFrame";
 import CountrySelect from "react-bootstrap-country-select";
 import 'bootstrap/dist/css/bootstrap.css';
 import 'react-bootstrap-country-select/dist/react-bootstrap-country-select.css';
+import SignIn from "./auth/SignIn";
+import SignUp from "./auth/SignUp";
+import AuthDetails from "./auth/AuthDetails";
 
 const  App = () => {
     const [selectedCountry, setSelectedCountry] = useState({name: "Poland", alpha3: "pol"});
@@ -35,6 +38,9 @@ const  App = () => {
                 src={'./assets/tp_logo.png'}
                 alt="Trip Planner Logo"
             />
+            <SignIn />
+            <SignUp />
+            <AuthDetails />
             <div style={{width:"500px"}}>
                 <CountrySelect
                     value={selectedCountry}

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect} from 'react';
 import { GoogleMap, Marker, useJsApiLoader, Polyline } from '@react-google-maps/api';
 import CountryBorder, { getLatLngBounds } from "./CountryBorder";
 
@@ -45,7 +45,7 @@ const  MapFrame = (country) => {
         [setMap]
     );
 
-    const onUnmount = React.useCallback(function callback(map) {
+    const onUnmount = React.useCallback(function callback() {
         setMap(null)
     }, [setMap])
     CountryBorder(setMyBorders, country, setCountryCenter, setMyBorderType);
@@ -105,6 +105,7 @@ const  MapFrame = (country) => {
             onLoad={onLoad}
             onUnmount={onUnmount}
             gestureHandling={'auto'}
+            options={{streetViewControl: false}}
         >
             { /* Child components, such as markers, info windows, etc. */}
             <Marker position={center}/> { /* Shows red marker in center of the map */}
