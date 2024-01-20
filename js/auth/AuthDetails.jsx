@@ -18,7 +18,6 @@ const AuthDetails = () => {
             listen();
         }
 
-
     }, []);
 
     const userSingOut = () => {
@@ -29,9 +28,6 @@ const AuthDetails = () => {
     return (
         <div>{ authUser ? <><p>{`Signed In as ${authUser.email}`} </p><button onClick={userSingOut}>Sign Out</button></> : <p>Signed Out</p>}</div>
             )
-
 }
-
-
 
 export default AuthDetails;

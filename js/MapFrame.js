@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import { GoogleMap, Marker, useJsApiLoader, Polyline } from '@react-google-maps/api';
 import CountryBorder, { getLatLngBounds } from "./CountryBorder";
+import AttractionsListRender from "./AttractionsListRender";
+import CustomMarker from "../assets/custom_marker.png";
 
 const containerStyle = {
     width: '1100px',
@@ -30,13 +32,15 @@ const polandBound = [
 const  MapFrame = (country) => {
     const {isLoaded,loadError} = useJsApiLoader({
         id: 'google-map-script',
-        googleMapsApiKey: process.env.API_KEY //API KEY as environmental variable
+        googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY //API KEY as environmental variable
     })
     const [map, setMap] = React.useState(null);
     const [myBorders, setMyBorders] = React.useState(null);
     const [myBorderType, setMyBorderType] = React.useState("Polygon");
-    const [myBounds, setMyBounds] = useState(polandBound); //getLatLngBounds funkcja zwracajaca maxymalne zakresy kraju
+    const [myBounds, setMyBounds] = React.useState(polandBound); //getLatLngBounds funkcja zwracajaca maxymalne zakresy kraju
     const [countryCenter, setCountryCenter] = React.useState({lat: 50.60749435424805, lng: 16.77910041809082});
+    const [attractionsMarkers, setAttractionsMarkers] = React.useState([{lat: 0, lon: 0}]);//Markers to show on the map after country select
+    const [selectedMarker, setSelectedMarker] = React.useState(center);
 
    const onLoad = React.useCallback(
         (mapInstance) => {
@@ -48,6 +52,7 @@ const  MapFrame = (country) => {
     const onUnmount = React.useCallback(function callback() {
         setMap(null)
     }, [setMap])
+
     CountryBorder(setMyBorders, country, setCountryCenter, setMyBorderType);
 
     useEffect(() => {
@@ -96,29 +101,40 @@ const  MapFrame = (country) => {
     }
 
     return isLoaded ? (
+        <div>
+            <GoogleMap
+                mapContainerStyle={containerStyle}
+                center={countryCenter}
+                zoom={4}
+                mapTypeId={"terrain"}
+                onLoad={onLoad}
+                onUnmount={onUnmount}
+                gestureHandling={'auto'}
+                options={{streetViewControl: false}}
+            >
+                { /* Child components, such as markers, info windows, etc. */}
+                <Marker
+                    position={selectedMarker}
+                    options={{
+                        icon: CustomMarker,
+                }}
+                    zIndex={1000}
+                /> { /* Shows red marker in center of the map */}
+                {attractionsMarkers.map((el) => (<Marker key={el.lat} position={el}/>))}
+                <RenderCountry />
+            </GoogleMap>
 
-        <GoogleMap
-            mapContainerStyle={containerStyle}
-            center={countryCenter}
-            zoom={4}
-            mapTypeId={"terrain"}
-            onLoad={onLoad}
-            onUnmount={onUnmount}
-            gestureHandling={'auto'}
-            options={{streetViewControl: false}}
-        >
-            { /* Child components, such as markers, info windows, etc. */}
-            <Marker position={center}/> { /* Shows red marker in center of the map */}
-            {markers.map((el) => (<Marker key={el.lat} position={el}/>))}
-            <RenderCountry />
+            <AttractionsListRender myBounds={myBounds} setMarkers={setAttractionsMarkers} markers={attractionsMarkers} setMarker={setSelectedMarker}/>
 
-        </GoogleMap>
+        </div>
+
+
     ) : null;
 }
 
 export default React.memo(MapFrame); //Using memo improves performance for components that will look the same
 
 
-//Wyjebuje wszystko po wybraniu kraju
+// IMPORTANT:Wyjebuje wszystko po wybraniu kraju
 //     onLoad={onLoad}
-//      center={countryCenter}
+//     center={countryCenter}
