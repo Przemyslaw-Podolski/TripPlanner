@@ -92,6 +92,7 @@ const AttractionsListRender = ({myBounds, setMarkers, markers, setMarker}) =>{
         );
     }
 
+    // TODO: next button add
     return(
         <>
             <h2 className={"attractions__title"}>Spot list: </h2>
@@ -112,9 +113,9 @@ const AttractionsListRender = ({myBounds, setMarkers, markers, setMarker}) =>{
 };
 
 const AttractionInfoShow =  ({xid}) => {
-    // TODO: https://api.opentripmap.com/0.1/en/places/xid/W167176809?apikey=5ae2e3f221c38a28845f05b6989c3a66a18d9e755cb330371f1afda6
-    // TODO: http://api.opentripmap.com/0.1/en/places/geojson&apikey=5ae2e3f221c38a28845f05b6989c3a66a18d9e755cb330371f1afda6
-    // /
+
+    // TODO: description add and wiki link
+    // TODO: if array from fetch is smaller that 10 change rate
     const [fetchedData, setFetchedData] = useState([]); // State variable to store fetched data
     const [imageLink, setImageLink] = useState("");
 

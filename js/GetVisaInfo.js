@@ -2,7 +2,7 @@ const options = {
     method: 'GET',
     headers: {
         accept: 'application/json',
-        authorization: 'Basic cHJ6ZW15c2xhdy5wb2RvbHNraTpTbGF1Z2h0ZXI2NjY='
+        authorization: process.env.VISA_AUTH_KEY
     }
 };
 

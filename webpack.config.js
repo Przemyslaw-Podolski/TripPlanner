@@ -34,6 +34,7 @@ module.exports = {
   module: {
     rules: [
       {
+        //Rule to save files as js and jsx
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
@@ -48,7 +49,7 @@ module.exports = {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
       },
-      // Rure for png import
+      // Rule for png import
       {
         test: /\.(png|jpe?g|gif)$/i,
         use: [
