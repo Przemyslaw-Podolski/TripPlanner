@@ -1,13 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Component } from "react";
 import { createRoot } from "react-dom/client";
+import {
+    HashRouter,
+    Route,
+    Routes,
+    Link,
+    NavLink,
+    Outlet
+} from "react-router-dom";
 import MapFrame from "./MapFrame";
 import CountrySelect from "react-bootstrap-country-select";
 import 'bootstrap/dist/css/bootstrap.css';
 import 'react-bootstrap-country-select/dist/react-bootstrap-country-select.css';
-import SignIn from "./auth/SignIn";
-import SignUp from "./auth/SignUp";
-import AuthDetails from "./auth/AuthDetails";
 import { LoginContext } from "./Contexts/LoginContext"
+import LoginPage from "./auth/LoginPage";
+
 
 const  App = () => {
     const [selectedCountry, setSelectedCountry] = useState({name: "Poland", alpha3: "pol"});
@@ -42,9 +49,7 @@ const  App = () => {
             />
             { authUser !== null ? <p>User Logged in</p> : <p>Please Log in</p>}
             <LoginContext.Provider value={{ authUser, setAuthUser }}>
-                <SignIn />
-                <SignUp />
-                <AuthDetails />
+                <LoginPage/>
                 <div style={{width:"500px"}}>
                     <CountrySelect
                         value={selectedCountry}
@@ -55,8 +60,6 @@ const  App = () => {
                 </div>
                 {renderCountryDisplay()}
             </LoginContext.Provider>
-
-
             <div style={{height:"300px"}}></div>
         </>
         )

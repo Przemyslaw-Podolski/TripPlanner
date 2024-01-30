@@ -49,7 +49,7 @@ const AttractionsListRender = ({myBounds, setMarkers, markers, setMarker}) =>{
     const decimals = 10; //decimals for longitude and latitude
 
     /*----------------------------------------------------------------------------
-   /Get total number of POI's
+   /Get total number of POI's and set Offset to 0
    ----------------------------------------------------------------------------*/
     useEffect(() => {
         if (myBounds === undefined){
@@ -62,6 +62,7 @@ const AttractionsListRender = ({myBounds, setMarkers, markers, setMarker}) =>{
         ).then(function(data) {
             console.log("Attractions count: ", data.count)
             setAttractionsCount(data.count);
+            setOffset(0);
         });
     },[myBounds]);
 
