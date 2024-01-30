@@ -7,9 +7,11 @@ import 'react-bootstrap-country-select/dist/react-bootstrap-country-select.css';
 import SignIn from "./auth/SignIn";
 import SignUp from "./auth/SignUp";
 import AuthDetails from "./auth/AuthDetails";
+import { LoginContext } from "./Contexts/LoginContext"
 
 const  App = () => {
     const [selectedCountry, setSelectedCountry] = useState({name: "Poland", alpha3: "pol"});
+    const [authUser, setAuthUser] = useState(null);
 
     const handleCountryChange = (country) => {
         setSelectedCountry(country);
@@ -38,18 +40,23 @@ const  App = () => {
                 src={'./assets/tp_logo.png'}
                 alt="Trip Planner Logo"
             />
-            <SignIn />
-            <SignUp />
-            <AuthDetails />
-            <div style={{width:"500px"}}>
-                <CountrySelect
-                    value={selectedCountry}
-                    onChange={handleCountryChange}
-                    onTextChange={handleTextChange}
-                    flush={false}
-                />
-            </div>
-            {renderCountryDisplay()}
+            { authUser !== null ? <p>User Logged in</p> : <p>Please Log in</p>}
+            <LoginContext.Provider value={{ authUser, setAuthUser }}>
+                <SignIn />
+                <SignUp />
+                <AuthDetails />
+                <div style={{width:"500px"}}>
+                    <CountrySelect
+                        value={selectedCountry}
+                        onChange={handleCountryChange}
+                        onTextChange={handleTextChange}
+                        flush={false}
+                    />
+                </div>
+                {renderCountryDisplay()}
+            </LoginContext.Provider>
+
+
             <div style={{height:"300px"}}></div>
         </>
         )
