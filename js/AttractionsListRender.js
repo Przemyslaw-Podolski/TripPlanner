@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import {Image} from "react-bootstrap";
-const pageLength = 15; // number of objects per page
+const pageLength = 10; // number of objects per page
 let bounds = `lon_min=14.0745211117&lat_min=49.0273953314&lon_max=24.0299857927&lat_max=54.8515359564`;
-let offset = 0; // offset from first object in the list
+
+//let aoffset = 0; // offset from first object in the list
 let count; // total objects count
 const kinds = "&kinds=interesting_places"
 const format = "&format=geojson";
@@ -41,12 +42,33 @@ function apiOpenTripMapGet(method, query) {
 */
 
 const AttractionsListRender = ({myBounds, setMarkers, markers, setMarker}) =>{
+    const [offset, setOffset] = useState(0);
     const [fetchedData, setFetchedData] = useState([]); // State variable to store fetched data
     const [selectedXID, setSelectedXID] = useState(null);
-    const decimals = 10;
+    const [attractionsCount, setAttractionsCount] = useState(0);
+    const decimals = 10; //decimals for longitude and latitude
 
+    /*----------------------------------------------------------------------------
+   /Get total number of POI's
+   ----------------------------------------------------------------------------*/
     useEffect(() => {
+        if (myBounds === undefined){
+            return;
+        }
+        const boundsCode = `lon_min=${myBounds[0].lng.toFixed(decimals)}&lat_min=${myBounds[0].lat.toFixed(decimals)}&lon_max=${myBounds[3].lng.toFixed(decimals)}&lat_max=${myBounds[3].lat.toFixed(decimals)}`;
+        apiOpenTripMapGet(
+            "bbox?",
+            `${boundsCode}&limit=${pageLength}&offset=0&rate=3h&kinds=historic_object&format=count&`
+        ).then(function(data) {
+            console.log("Attractions count: ", data.count)
+            setAttractionsCount(data.count);
+        });
+    },[myBounds]);
 
+    /*----------------------------------------------------------------------------
+    /Get one page of attractions in defined bounds
+    ----------------------------------------------------------------------------*/
+    useEffect(() => {
         console.log("AttractionsListRender component call");
         if (myBounds === undefined){
             console.log("AttractionsListRender: MyBounds: ", myBounds);
@@ -57,15 +79,17 @@ const AttractionsListRender = ({myBounds, setMarkers, markers, setMarker}) =>{
         console.log("Bounds Code Calculated:",boundsCode);
         apiOpenTripMapGet(
             "bbox?",
-            `${boundsCode}&limit=${pageLength}&offset=${offset}&rate=3h&kinds=historic_object&format=json&`
+            `${boundsCode}&limit=${pageLength}&offset=${offset}&rate=3&kinds=historic_object&format=json&`
         ).then(function(data) {
             console.log("AttractionsListRender apiOpenTripMapGet returned data: ")
             console.log(data);
             setFetchedData(data);
         });
-    },[myBounds]);
+    },[myBounds,offset]);
 
-
+    /*----------------------------------------------------------------------------
+    /Set attractions markers to display on the map
+    ----------------------------------------------------------------------------*/
     useEffect(() => {
         console.log("Fetched data in useEffect: ", fetchedData);
         setMarkers(
@@ -92,6 +116,19 @@ const AttractionsListRender = ({myBounds, setMarkers, markers, setMarker}) =>{
         );
     }
 
+    /*----------------------------------------------------------------------------
+    /Next page button handler
+    ----------------------------------------------------------------------------*/
+    function nextBtnHandler(){
+        console.log("Next button clicked: offset: ", offset);
+        setOffset(prevState => prevState + pageLength);
+        console.log("Next button clicked: offset: ", offset);
+    }
+    function prevBtnHandler(){
+        setOffset(prevState => prevState - pageLength);
+    }
+
+
     // TODO: next button add
     return(
         <>
@@ -105,13 +142,24 @@ const AttractionsListRender = ({myBounds, setMarkers, markers, setMarker}) =>{
                     >
                         {item.name}
                     </li>))
+
                 }
+                <div className={"attractions__list attractions__pagination"}>
+                    <p>Page {Math.floor((offset + pageLength) / pageLength)} from {Math.ceil(attractionsCount / pageLength)}</p>
+                    {offset > 0 ? <button onClick={e => prevBtnHandler()}>Prev</button> : <></>}
+                    {attractionsCount > offset + pageLength ? <button onClick={e => nextBtnHandler()}>Next</button> : <></>}
+                </div>
+
+
             </ul>
             <AttractionInfoShow xid={selectedXID}/>
         </>
     )
 };
 
+/*----------------------------------------------------------------------------
+/Show one selected attraction
+----------------------------------------------------------------------------*/
 const AttractionInfoShow =  ({xid}) => {
 
     // TODO: description add and wiki link

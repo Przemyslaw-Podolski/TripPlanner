@@ -5,8 +5,8 @@ import AttractionsListRender from "./AttractionsListRender";
 import CustomMarker from "../assets/custom_marker.png";
 
 const containerStyle = {
-    width: '1100px',
-    height: '800px'
+    width: '400px',
+    height: '400px'
 };
 
 const center = {
