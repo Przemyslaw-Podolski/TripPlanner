@@ -1,8 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext } from 'react';
 import { GoogleMap, Marker, useJsApiLoader, Polyline } from '@react-google-maps/api';
 import CountryBorder, { getLatLngBounds } from "./CountryBorder";
 import AttractionsListRender from "./AttractionsListRender";
 import CustomMarker from "../assets/custom_marker.png";
+import { SelectedCountryContext } from "./Contexts/SelectedCountryContext";
+import {Link} from "react-router-dom";
 
 const containerStyle = {
     width: '400px',
@@ -29,7 +31,7 @@ const polandBound = [
     {lat: 54.8515359564, lng: 24.0299857927},
 ]
 
-const  MapFrame = (country) => {
+const  MapFrame = () => {
     const {isLoaded,loadError} = useJsApiLoader({
         id: 'google-map-script',
         googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY //API KEY as environmental variable
@@ -41,6 +43,7 @@ const  MapFrame = (country) => {
     const [countryCenter, setCountryCenter] = React.useState({lat: 50.60749435424805, lng: 16.77910041809082});
     const [attractionsMarkers, setAttractionsMarkers] = React.useState([{lat: 0, lon: 0}]);//Markers to show on the map after country select
     const [selectedMarker, setSelectedMarker] = React.useState(center);
+    const { selectedCountry, setSelectedCountry } = useContext(SelectedCountryContext);
 
    const onLoad = React.useCallback(
         (mapInstance) => {
@@ -52,6 +55,10 @@ const  MapFrame = (country) => {
     const onUnmount = React.useCallback(function callback() {
         setMap(null)
     }, [setMap])
+
+    const country = selectedCountry ? selectedCountry.alpha3 : "pol";
+    console.log("Map Frame. Selected Coountry: ", selectedCountry);
+    console.log("Map Frame. Selected Coountry: ", selectedCountry);
 
     CountryBorder(setMyBorders, country, setCountryCenter, setMyBorderType);
 
@@ -102,6 +109,7 @@ const  MapFrame = (country) => {
 
     return isLoaded ? (
         <div>
+            <Link to='/'>Login Page</Link>
             <GoogleMap
                 mapContainerStyle={containerStyle}
                 center={countryCenter}

@@ -13,6 +13,7 @@ import CountrySelect from "react-bootstrap-country-select";
 import 'bootstrap/dist/css/bootstrap.css';
 import 'react-bootstrap-country-select/dist/react-bootstrap-country-select.css';
 import { LoginContext } from "./Contexts/LoginContext"
+import { SelectedCountryContext } from "./Contexts/SelectedCountryContext"
 import LoginPage from "./auth/LoginPage";
 
 
@@ -29,17 +30,22 @@ const  App = () => {
     };
 
     const renderCountryDisplay = () => {
-        const countryName = selectedCountry ? selectedCountry.name : "Poland";
+        //const countryName = selectedCountry ? selectedCountry.name : "Poland";
         const countryCode = selectedCountry ? selectedCountry.alpha3 : "pol";
-        console.log("countryName", countryName);
+        //console.log("countryName", countryName);
         console.log("countryName", countryCode);
         return (
             <div>
-                <p>{countryName}</p>aA
                 <MapFrame country={countryCode} />
             </div>
         );
     };
+
+    class NotFound extends Component {
+        render() {
+            return <h1>404,Nothing is here. Wrong Address.</h1>;
+        }
+    }
 
     return(
         <>
@@ -48,17 +54,34 @@ const  App = () => {
                 alt="Trip Planner Logo"
             />
             { authUser !== null ? <p>User Logged in</p> : <p>Please Log in</p>}
+
             <LoginContext.Provider value={{ authUser, setAuthUser }}>
-                <LoginPage/>
-                <div style={{width:"500px"}}>
-                    <CountrySelect
-                        value={selectedCountry}
-                        onChange={handleCountryChange}
-                        onTextChange={handleTextChange}
-                        flush={false}
-                    />
-                </div>
-                {renderCountryDisplay()}
+                <SelectedCountryContext.Provider value={{ selectedCountry, setSelectedCountry }}>
+
+
+                <HashRouter>
+                    <Routes>
+                        <Route path='/' element={<LoginPage/>}/>
+                        <Route path='map' element={
+                            <>
+                                <div style={{width:"500px"}}>
+                                    <CountrySelect
+                                        value={selectedCountry}
+                                        onChange={handleCountryChange}
+                                        onTextChange={handleTextChange}
+                                        flush={false}
+                                    />
+                                </div>
+                                <MapFrame />
+                            </>
+
+                        }/>
+                        <Route path="*" element={<NotFound />} />
+                    </Routes>
+
+                </HashRouter>
+
+                </SelectedCountryContext.Provider>
             </LoginContext.Provider>
             <div style={{height:"300px"}}></div>
         </>
