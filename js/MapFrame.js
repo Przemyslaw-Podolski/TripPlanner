@@ -5,6 +5,9 @@ import AttractionsListRender from "./AttractionsListRender";
 import CustomMarker from "../assets/custom_marker.png";
 import { SelectedCountryContext } from "./Contexts/SelectedCountryContext";
 import {Link} from "react-router-dom";
+import CountrySelect from "react-bootstrap-country-select";
+import 'bootstrap/dist/css/bootstrap.css';
+import 'react-bootstrap-country-select/dist/react-bootstrap-country-select.css';
 
 const containerStyle = {
     width: '400px',
@@ -91,6 +94,14 @@ const  MapFrame = () => {
 
     }, [map, myBounds]);
 
+    const handleCountryChange = (country) => {
+        setSelectedCountry(country);
+    };
+    const handleTextChange = (country) => {
+        setSelectedCountry({ name: "" });
+        console.log(`Text changed: ${country}`);
+    };
+
 
     const RenderCountry = () => {
         if (myBorderType === "Polygon"){
@@ -111,6 +122,14 @@ const  MapFrame = () => {
         <div >
             <Link to='/'>Login Page</Link>
             <Link to='/visa'>Get Visa Info</Link>
+            <div style={{width:"500px"}}>
+                <CountrySelect
+                    value={selectedCountry}
+                    onChange={handleCountryChange}
+                    onTextChange={handleTextChange}
+                    flush={false}
+                />
+            </div>
             <GoogleMap
                 mapContainerStyle={containerStyle}
                 center={countryCenter}
