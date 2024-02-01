@@ -13,6 +13,7 @@ const LoginPage = () => {
             <SignUp />
             <AuthDetails />
             <Link to='/map'>Go to planner</Link>
+            <Link to='/visa'>Get Visa Info</Link>
         </>
     )
 }

@@ -1,6 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import { auth } from './firebaseConfig';
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { InputText } from 'primereact/inputtext';
+import { Password } from 'primereact/password';
+import { Button } from 'primereact/button';
+import { PrimeReactProvider } from 'primereact/api';
 
 const SignUp = () => {
     const [email, setEmail] = useState('');
@@ -18,9 +22,20 @@ const SignUp = () => {
         <div className="sign-in-container">
             <form onSubmit={signUp}>
                 <h1>Create Account</h1>
-                <input type="email" placeholder='Enter your email' value={email} onChange={(e) => setEmail(e.target.value)}></input>
-                <input type="password" placeholder='Enter your password' value={password} onChange={(e) => setPassword(e.target.value)}></input>
-                <button type="submit">Sign Up</button>
+                <PrimeReactProvider>
+                <div style={{height:"25px"}}></div>
+                <span className="p-float-label">
+                    <InputText id="username" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <label htmlFor="username">e-mail</label>
+                </span>
+                    <div style={{height:"25px"}}></div>
+                    <span className="p-float-label">
+                    <Password inputId="password" value={password} onChange={(e) => setPassword(e.target.value)} toggleMask />
+                    <label htmlFor="password">password</label>
+                </span>
+                    <div style={{height:"25px"}}></div>
+                    <Button label={'Sign Up'} style={{borderRadius:"5px"}}/>
+                </PrimeReactProvider>
             </form>
         </div>
     )

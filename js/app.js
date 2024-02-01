@@ -12,9 +12,11 @@ import MapFrame from "./MapFrame";
 import CountrySelect from "react-bootstrap-country-select";
 import 'bootstrap/dist/css/bootstrap.css';
 import 'react-bootstrap-country-select/dist/react-bootstrap-country-select.css';
+import "primereact/resources/themes/lara-light-cyan/theme.css";
 import { LoginContext } from "./Contexts/LoginContext"
 import { SelectedCountryContext } from "./Contexts/SelectedCountryContext"
 import LoginPage from "./auth/LoginPage";
+import GetVisaInfo from "./GetVisaInfo";
 
 
 const  App = () => {
@@ -73,9 +75,11 @@ const  App = () => {
                                     />
                                 </div>
                                 <MapFrame />
+
                             </>
 
                         }/>
+                        <Route path='/visa' element={<GetVisaInfo />}/>
                         <Route path="*" element={<NotFound />} />
                     </Routes>
 

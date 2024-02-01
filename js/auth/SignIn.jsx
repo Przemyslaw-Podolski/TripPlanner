@@ -1,6 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import { auth } from './firebaseConfig';
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { InputText } from 'primereact/inputtext';
+import { Password } from 'primereact/password';
+import { Button } from 'primereact/button';
+import { PrimeReactProvider } from 'primereact/api';
 
 const SignIn = () => {
     const [email, setEmail] = useState('');
@@ -18,12 +22,26 @@ const SignIn = () => {
         <div className="sign-in-container">
             <form onSubmit={signIn}>
                 <h1>Log In to your account</h1>
-                <input type="email" placeholder='Enter your email' value={email} onChange={(e) => setEmail(e.target.value)}></input>
-                <input type="password" placeholder='Enter your password' value={password} onChange={(e) => setPassword(e.target.value)}></input>
-                <button type="submit">Log In</button>
+                <div style={{height:"25px"}}></div>
+                <PrimeReactProvider>
+                <span className="p-float-label">
+                    <InputText id="username" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <label htmlFor="username">e-mail</label>
+                </span>
+                <div style={{height:"25px"}}></div>
+                <span className="p-float-label">
+                    <Password inputId="password" value={password} feedback={false} onChange={(e) => setPassword(e.target.value)} toggleMask />
+                    <label htmlFor="password">password</label>
+                </span>
+                    <div style={{height:"25px"}}></div>
+                    <Button label={'Log In'} style={{borderRadius:"5px"}}/>
+                </PrimeReactProvider>
+
             </form>
         </div>
     )
 }
 
 export default SignIn;
+
+//feedback={false}

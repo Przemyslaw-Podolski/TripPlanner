@@ -108,8 +108,9 @@ const  MapFrame = () => {
     }
 
     return isLoaded ? (
-        <div>
+        <div >
             <Link to='/'>Login Page</Link>
+            <Link to='/visa'>Get Visa Info</Link>
             <GoogleMap
                 mapContainerStyle={containerStyle}
                 center={countryCenter}
