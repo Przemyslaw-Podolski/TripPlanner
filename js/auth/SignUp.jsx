@@ -9,21 +9,30 @@ import { PrimeReactProvider } from 'primereact/api';
 const SignUp = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [singUpFail, setSignUpFail] = useState(false);
+    const loginInfoSelector = document.querySelector(".login__info__text");
 
     const signUp = (e) => {
         e.preventDefault();
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 console.log(userCredential);
-            }).catch((error) => {console.log(error);});
+                loginInfoSelector.classList.add("login__green__text");
+                setSignUpFail(false);
+            }).catch((error) => {
+                console.log(error);
+                setSignUpFail(true);
+            });
+        setEmail('');
+        setPassword('');
     };
 
     return(
-        <div className="sign-in-container">
-            <form onSubmit={signUp}>
-                <h1>Create Account</h1>
+        <div className="sign-up-container auth__container">
+            <form className={"auth__form"} onSubmit={signUp}>
+                <h3 className={"auth__title"}>Create Account</h3>
+                {singUpFail ? <p className={"auth__error"}>Sign Up attempt failed</p>:<></>}
                 <PrimeReactProvider>
-                <div style={{height:"25px"}}></div>
                 <span className="p-float-label">
                     <InputText id="username" value={email} onChange={(e) => setEmail(e.target.value)} />
                     <label htmlFor="username">e-mail</label>

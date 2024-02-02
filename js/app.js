@@ -1,10 +1,6 @@
-import React, { useState, useEffect, Component } from "react";
+import React, { useState, Component } from "react";
 import { createRoot } from "react-dom/client";
-import {
-    HashRouter,
-    Route,
-    Routes,
-} from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 import MapFrame from "./MapFrame";
 import 'bootstrap/dist/css/bootstrap.css';
 import 'react-bootstrap-country-select/dist/react-bootstrap-country-select.css';

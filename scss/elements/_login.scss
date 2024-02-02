@@ -1,4 +1,254 @@
+
+body{
+    margin: 0;
+    padding: 0;
+  }
+
+
+.header{
+  max-width: 1000px;
+  margin: 0.4em auto;
+
+  @include mobile{
+    width: 97vw;
+    margin: 0.4em auto;
+  }
+  //box-shadow: 0 3px 6px rgba(0, 0, 0, .16);
+
+
+  .logo__small{
+    display: none;
+  }
+  .logo__big{
+    width: 100%;
+  }
+
+  @include mobile{
+    .logo__big{
+      display: none;
+    }
+    .logo__small{
+      display: block;
+      width: 97vw;
+    }
+  }
+
+  .logged__in__nav{
+    width: 100% !important;
+    padding-right: 0 !important;
+  }
+
+
+  nav{
+    width: 50%;
+    display: inline-block;
+    padding-right: 0.4rem;
+    @include mobile {
+      display: block;
+      width: 100%;
+      padding-right: 0;
+    }
+    &:first-child{
+      margin-right: 0.4rem;
+    }
+
+  .header__nav{
+    display: flex;
+    margin-top: 0.4rem;
+    margin-bottom: 0.4rem;
+    list-style: none;
+    padding-left: 0.1rem;
+    justify-content: space-between;
+    @include mobile {
+      justify-content: space-between;
+    }
+  }
+  }
+  .nav__element {
+    padding: 0;
+
+    width: 49%;
+    @include mobile {
+      width: 47.5vw;
+      margin-right: 0;
+    }
+  }
+
+  .nav__link {
+    display: block;
+    padding: 1em 0.6em;
+    color: $color-light-grey;
+    background-color: $color-secondary;
+    border: 1px $color-primary solid;
+    border-radius: 5px;
+    font-weight: 700;
+    font-family: $font-lato;
+    text-decoration: none;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, .16);
+    &:hover{
+      background-color: $color-primary-shadow;
+    }
+    @include mobile {
+      &:hover{
+        background-color: $color-primary-shadow;
+      }
+    }
+  }
+
+  .nav__link__disabled {
+    display: block;
+    padding: 1em 0.6em;
+    color: $color-light-grey;
+    background-color: $color-secondary-grayed;
+    border: 1px $color-primary solid;
+    border-radius: 5px;
+    font-weight: 700;
+    font-family: $font-lato;
+    text-decoration: none;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, .16);
+  }
+
+  .logged__in{
+    display: block !important;
+    width: 100% !important;
+  }
+
+  .login__info{
+    width: 50%;
+    display: inline-block;
+    @include mobile {
+      width: 100%;
+    }
+
+
+    .login__info__text{
+      padding: 1em 0.6em;
+      background-color: $color-primary;
+      border: 1px $color-primary solid;
+      border-radius: 5px;
+      font-weight: 200;
+      font-family: $font-lato;
+      text-align: center;
+      color: $color-light-grey;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, .16);
+    }
+    .login__green__text{
+      color: $color-green;
+      font-weight: 500;
+    }
+    .signout_button{
+      width: 100%;
+      padding: 1em 0.6em;
+      background-color: $color-yellow;
+      border: 1px $color-primary solid;
+      border-radius: 5px;
+      font-weight: 700;
+      font-family: $font-lato;
+      text-align: center;
+      color: $color-light-grey;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, .16);
+      &:hover{
+        background-color: $color-orange;
+      }
+      @include mobile {
+        &:hover{
+          background-color: $color-orange;
+        }
+      }
+    }
+  }
+}
+
 .user__forms{
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  padding: 0.4rem;
+  max-width: 1000px;
+  margin: 0.4em auto;
+
+  @include mobile{
+    width: 97vw;
+    margin: 0.4em auto;
+  }
+
+  .p-button {
+    color: $color-light-grey;
+    background-color: $color-secondary;
+    border: 1px $color-primary solid;
+    font-weight: 700;
+    font-family: $font-lato;
+    text-decoration: none;
+    &:hover{
+      background-color: $color-primary-shadow;
+    }
+  }
+
+  .auth__container{
+    box-shadow: 0 3px 6px rgba(0, 0, 0, .16);
+    margin-bottom: 1rem;
+    padding-bottom: 0.6rem;
+    padding-left: 0.6rem;
+    width: 49.5%;
+    @include mobile{
+      width: auto;
+    }
+
+    .auth__title{
+      margin-top: 1rem;
+      margin-bottom: 2rem;
+      font-family: $font-lato;
+      font-weight: 400;
+    }
+    .auth__error{
+      position: relative;
+      top: -2rem;
+      color: $color-redish;
+      margin: 0;
+    }
+  }
+
+  .welcome{
+    padding: 1em;
+    font-family: $font-lato;
+    border: 1px $color-primary solid;
+    border-radius: 5px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, .16);
+  }
+
+  .p-float-label{
+    width: 80%;
+    .p-inputtext{
+      width: 100%;
+    }
+    .p-password{
+      width: 100%;
+      .p-inputtext{
+        width: 100%;
+      }
+      .p-component{
+        width: 100%;
+      }
+    }
+  }
+
+  @include mobile {
+    flex-direction: column;
+    .p-float-label{
+      width: 92vw;
+      .p-inputtext{
+        width: 100%;
+      }
+      .p-password{
+        width: 100%;
+        .p-inputtext{
+          width: 100%;
+        }
+        .p-component{
+          width: 100%;
+        }
+      }
+    }
+  }
 }
+
