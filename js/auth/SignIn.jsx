@@ -16,11 +16,6 @@ const SignIn = () => {
     const headerNavSelector = document.querySelector(".nav");
     const {authUser, setAuthUser} = useContext(LoginContext);
 
-    if (authUser){
-        loginInfoSelector.classList.add("login__green__text");
-        loginInfoBoxSelector.classList.add("logged__in");
-        headerNavSelector.classList.add("logged__in__nav");
-    }
     const signIn = (e) => {
         e.preventDefault();
 
@@ -64,5 +59,3 @@ const SignIn = () => {
 }
 
 export default SignIn;
-
-//feedback={false}

@@ -155,7 +155,6 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 0.4rem;
   max-width: 1000px;
   margin: 0.4em auto;
 }
@@ -241,6 +240,49 @@ body {
   .user__forms .p-float-label .p-password .p-component {
     width: 100%;
   }
+}
+
+.visa__container {
+  margin: auto;
+  max-width: 1000px;
+}
+@media (max-width: 1024px) {
+  .visa__container {
+    margin: 0.4em;
+  }
+}
+.visa__container .logo__visa {
+  margin-top: 0.4em;
+  width: 100%;
+}
+.visa__container .visa__nav {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.8em;
+}
+.visa__container .visa__nav .nav__element {
+  width: 49%;
+  margin-top: 0.4em;
+  display: inline-block;
+  padding: 1em 0.6em;
+  color: #F7F7F7;
+  background-color: rgb(4, 177, 184);
+  border: 1px #2A9EB8 solid;
+  border-radius: 5px;
+  font-weight: 700;
+  font-family: "Lato", sans-serif;
+  text-decoration: none;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+}
+.visa__container .visa__nav .nav__element:hover {
+  background-color: #195c6b;
+}
+.visa__container .iframe__object {
+  overflow: hidden;
+  min-width: 300px;
+  width: 100%;
+  border: none;
+  height: 120vh;
 }
 
 /*# sourceMappingURL=main.css.map */

@@ -38,15 +38,18 @@ const AuthDetails = () => {
 
     return (
         <div className={classInfoBoxDynamic}>
-            { authUser
+            {
+                authUser
                 ?
                 <>
                     <p className={classInfoDynamic}>{`Signed In as ${authUser.email}`} </p>
                     <button className={"signout_button"} onClick={userSingOut}>Sign Out</button>
                 </>
                 :
-                <p className={"login__info__text"}>Signed Out</p>}</div>
-            )
+                <p className={"login__info__text"}>Signed Out</p>
+            }
+        </div>
+    )
 }
 
 export default AuthDetails;
