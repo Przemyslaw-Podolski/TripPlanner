@@ -7,7 +7,7 @@ const pageLength = 10; // number of objects per page
 function apiOpenTripMapGet(method, query) {
     return new Promise(function(resolve, reject) {
         let otmAPI =
-            "http://api.opentripmap.com/0.1/en/places/" +
+            "https://api.opentripmap.com/0.1/en/places/" +
             method +
             "apikey=" + process.env.OPEN_TRIP_MAP_API_KEY;
         if (query !== undefined) {
