@@ -8,6 +8,7 @@ import { PrimeReactProvider } from 'primereact/api';
 import {LoginContext} from "../Contexts/LoginContext";
 
 const SignIn = () => {
+    const [screenWidth] = useState(window.innerWidth);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loginFail, setLoginFail] = useState(false);

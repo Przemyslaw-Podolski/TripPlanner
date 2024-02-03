@@ -8,8 +8,11 @@ import { Link } from "react-router-dom";
 const LoginPage = () => {
     const {authUser} = useContext(LoginContext);
     const classDynamic = authUser ? "nav logged__in__nav" : "nav";
+    const classLogoDynamic = authUser ? "logo__login logo__small logo__hide" : "logo__login logo__small";
+    const classLogoBigDynamic = authUser ? "logo__login logo__small" : "logo__login logo__small logo__hide";
 
-
+    //tp_logo_mobile_small
+    //tp_logo_square
     return(
         <div className={"login container__login"}>
         <header className="header">
@@ -19,9 +22,14 @@ const LoginPage = () => {
                 className={"logo__login logo__big"}
             />
             <img
+                src={'../assets/tp_logo_mobile_small.png'}
+                alt="Trip Planner Logo"
+                className={classLogoDynamic}
+            />
+            <img
                 src={'../assets/tp_logo_square.png'}
                 alt="Trip Planner Logo"
-                className={"logo__login logo__small"}
+                className={classLogoBigDynamic}
             />
             <nav className={classDynamic}>
                 <ul className="header__nav">
@@ -41,19 +49,14 @@ const LoginPage = () => {
             <AuthDetails className={"user__info"}/>
         </header>
             <div className={"user__forms"}>
+                <div className={"welcome"}>
+                    <h3 className={"welcome__title"}>Welcome</h3>
+                    <p className={"welcome__content"}>This Trip Planner Application is a React-based web app designed to help users plan their trips.
+                        It will help you find visa information. You will also find attractions by listing them for every country.</p>
+                </div>
                 {!authUser ?<SignIn className={"signin_form"}/> : <></>}
                 {!authUser ?<SignUp className={"signup_form"}/> : <></>}
-                {authUser ?
-                    <div className={"welcome"}>
-                        <h3 className={"welcome__title"}>Welcome</h3>
-                        <p className={"welcome__content"}>This Trip Planner Application is a React-based web app designed to help users plan their trips with ease.
-                            It will help you find attractions by listing them for every country. You will also find visa information.</p>
-                    </div>
-                    :
-                    <></>
-                }
             </div>
-
         </div>
     )
 }
