@@ -20,6 +20,10 @@ This Trip Planner Application is a React-based web app designed to help users pl
 - **Google Maps API** for rendering maps and location data.
 - **React Bootstrap** and **PrimeReact** for UI components and styling.
 
+## Diagram
+
+![Logic_Diagram](./assets/diagram.png)
+
 ## Setup and Installation
 
 1. **Clone the repository:**
