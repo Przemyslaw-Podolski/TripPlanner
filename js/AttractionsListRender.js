@@ -120,22 +120,25 @@ const AttractionsListRender = ({myBounds, setMarkers, markers, setMarker}) =>{
 
             <div className={"attractions__container"}>
                 <h5 className={"attractions__title"}>Spot list: </h5>
-                <ul className={"attractions__list"}>
-                    {fetchedData.map(item =>
-                        (<li
-                            className={"attractions__element"}
-                            key={item.xid}
-                            onClick={(e) => chooseAttraction(item.xid, item.point.lon, item.point.lat)}
-                        >
-                            {item.name}
-                        </li>))
-                    }
+                <div className="attractions__list__container">
+                    <ul className={"attractions__list"}>
+                        {fetchedData.map(item =>
+                            (<li
+                                className={"attractions__element"}
+                                key={item.xid}
+                                onClick={(e) => chooseAttraction(item.xid, item.point.lon, item.point.lat)}
+                            >
+                                {item.name}
+                            </li>))
+                        }
+                    </ul>
                     <div className={"attractions__pagination"}>
                         <p className={"pagination__info"}>Page {Math.floor((offset + pageLength) / pageLength)} from {Math.ceil(attractionsCount / pageLength)}</p>
                         {offset > 0 ? <button className={"list__btn btn"} onClick={e => prevBtnHandler()}>Prev</button> : <></>}
                         {attractionsCount > offset + pageLength ? <button className={"list__btn btn"} onClick={e => nextBtnHandler()}>Next</button> : <></>}
                     </div>
-                </ul>
+                </div>
+
             </div>
         </>
     )
@@ -149,6 +152,7 @@ const AttractionInfoShow =  ({xid}) => {
     // TODO: description add and wiki link
     // TODO: if array from fetch is smaller that 10 change rate
     const [fetchedData, setFetchedData] = useState([]); // State variable to store fetched data
+    const [locationName, setLocationName] = useState(""); //City or town or village
 
     useEffect(() => {
         if (xid === undefined) {
@@ -159,6 +163,7 @@ const AttractionInfoShow =  ({xid}) => {
             `xid/${xid}?`
         ).then(function (data) {
             setFetchedData(data);
+
         });
     }, [xid]);
 
@@ -172,9 +177,31 @@ const AttractionInfoShow =  ({xid}) => {
         Image = (<></>);
     }
 
+    useEffect(() => {
+        if (!fetchedData.address) {
+            console.log("No fetchedData.address");
+            return;
+        }
+        // Use else if to ensure only one condition sets the locationName
+        if (fetchedData.address.town) {
+            setLocationName(fetchedData.address.town);
+        } else if (fetchedData.address.city) {
+            setLocationName(fetchedData.address.city);
+        } else if (fetchedData.address.village) {
+            setLocationName(fetchedData.address.village);
+        }else if (fetchedData.address.state) {
+            setLocationName(fetchedData.address.state);
+        }else{
+            setLocationName("");
+        }
+    }, [fetchedData.address]);
+
+
     return (
         <>
-            <h5 className={"attractions__title"} >Preview: {fetchedData.name}</h5>
+            <h5 className={"attractions__title"} >{fetchedData.name}</h5>
+            {fetchedData.address ? <p className={"attractions__adress"} > {locationName} {fetchedData.address.road} {fetchedData.address.house_number}</p> : <></>}
+            <a className={"wiki__link"} href={fetchedData.wikipedia} target="_blank">more info</a>
             <div className={"image__container"}>{Image}</div>
         </>
     )

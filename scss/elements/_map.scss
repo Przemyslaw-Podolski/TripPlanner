@@ -60,6 +60,7 @@
 
     margin-bottom: 0.6em;
     .country__title{
+      color: #2A9EB8;
 
       font-famity: $font-lato;
     }
@@ -98,11 +99,21 @@
       box-shadow: 0 3px 6px rgba(0, 0, 0, .16);
       width: 49%;
       height: 30em;
+      text-align: center;
       @include mobile{
         width: 100%;
       }
 
       .attractions__title{
+        text-align: center;
+      }
+      .attractions__adress{
+        display: inline-block;
+        margin-right: 1em;
+        margin-bottom: 0;
+      }
+      .wiki__link{
+        display: inline-block;
         text-align: center;
       }
 
@@ -111,14 +122,14 @@
         justify-content:center;
         align-items: center;
         width:100%;
-        height:95%;
+        height:90%;
         text-align: center;
 
         .image_attraction{
           border: solid 1px $color-primary;
           border-radius: 5px;
           position: relative;
-          margin: 1em 0;
+          margin: 0 0;
           max-width: 95%;
           width: auto;
           max-height: 90%;
@@ -126,7 +137,7 @@
       }
     }
 
-    .attractions__container{
+    .attractions__container {
       margin-top: 0.8em;
       padding: 0.8em;
       border: solid 2px $color-primary;
@@ -134,45 +145,67 @@
       box-shadow: 0 3px 6px rgba(0, 0, 0, .16);
       width: 49%;
       height: 30em;
-      @include mobile{
+      @include mobile {
         width: 100%;
       }
 
-      .attractions__title{
+      .attractions__title {
         font-famity: $font-lato;
+        color: #2A9EB8;
       }
-      .attractions__list{
+
+      .attractions__list__container {
         height: 90%;
         font-family: $font-lato;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         align-content: space-between;
-        .attractions__element{
-          &:hover{
-            cursor: pointer;
-            background: $color-light-grey;
-          }
-        }
-        .pagination__info{
+
+        .pagination__info {
           margin-left: 0.3em;
           margin-bottom: 0.2em;
-         color: $color-primary-shadow;
+          color: $color-primary-shadow;
         }
-        .list__btn{
+
+        .list__btn {
           color: $color-primary-shadow;
           border: solid 1px $color-primary-shadow;
           border-radius: 3px;
           margin-right: 0.4em;
           -webkit-transition: all 0.5s ease;
           transition: all 0.2s ease;
+
           &:hover {
             //background-color: $color-primary-shadow;
             transform: rotate(0.5deg);
             box-shadow: 0 2px 4px rgba(20, 73, 86, 0.9);
           }
         }
+
+      .attractions__list {
+        height: 90%;
+        font-family: $font-lato;
+        @include mobile{
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+          align-content: space-between;
+        }
+        //display: flex;
+        //flex-direction: column;
+        //justify-content: space-around;
+        //align-content: space-between;
+
+        .attractions__element {
+          border-bottom: solid 1px $color-light-grey;
+          &:hover {
+            cursor: pointer;
+            background: $color-light-grey;
+          }
+        }
       }
+    }
     }
   }
 }

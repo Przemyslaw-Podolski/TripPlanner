@@ -3,7 +3,7 @@
   "version": "2.1.0",
   "scripts": {
     "start": "webpack serve",
-    "build": "webpack",
+    "buildApp": "webpack",
     "scss": "sass scss/main.scss:css/main.css",
     "watch": "sass --watch scss/main.scss:css/main.css",
     "dev": "npm-run-all --parallel start watch"
