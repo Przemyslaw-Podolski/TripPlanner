@@ -9,7 +9,21 @@
   .logo__visa{
     margin-top: 0.4em;
     width: 100%;
+    @include mobile{
+      display: none;
+    }
   }
+
+  .logo__visa_small{
+    display: none;
+    margin-top: 0.4em;
+    width: 100%;
+    @include mobile{
+      display: block;
+    }
+  }
+
+
   .visa__nav{
     display: flex;
     justify-content: space-between;
@@ -28,9 +42,14 @@
     font-family: $font-lato;
     text-decoration: none;
     box-shadow: 0 3px 6px rgba(0, 0, 0, .16);
+    -webkit-transition: all 0.5s ease;
+    transition: all 0.5s ease;
 
     &:hover {
       background-color: $color-primary-shadow;
+      transform: rotate(0.5deg);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.72);
+
     }
   }
   }

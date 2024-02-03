@@ -9,23 +9,10 @@ import CountrySelect from "react-bootstrap-country-select";
 import 'bootstrap/dist/css/bootstrap.css';
 import 'react-bootstrap-country-select/dist/react-bootstrap-country-select.css';
 
-const containerStyle = {
-    width: '400px',
-    height: '400px'
-};
-
 const center = {
     lat: 50.60749435424805,
     lng: 16.77910041809082
 };
-
-//example of markers to add on a map.
-const markers = [
-    {lat: 50.63, lng: 16.707},
-    {lat: 50.62, lng: 16.714},
-    {lat: 50.60, lng: 16.781},
-    {lat: 50.59, lng: 16.742}
-]
 
 const polandBound = [
     {lat: 49.0273953314, lng: 14.0745211117},
@@ -60,8 +47,6 @@ const  MapFrame = () => {
     }, [setMap])
 
     const country = selectedCountry ? selectedCountry.alpha3 : "pol";
-    console.log("Map Frame. Selected Coountry: ", selectedCountry);
-    console.log("Map Frame. Selected Coountry: ", selectedCountry);
 
     CountryBorder(setMyBorders, country, setCountryCenter, setMyBorderType);
 
@@ -71,14 +56,6 @@ const  MapFrame = () => {
 
 
     useEffect(() => {
-        /*
-        console.log("MapFrame line:67 myBorder", myBorders)
-        console.log("MapFrame line:68 getLatLngBounds", getLatLngBounds(myBorders, myBorderType))
-        setMyBounds(getLatLngBounds(myBorders, myBorderType));
-        console.log("MapFrame line:70 myBounds", myBounds)
-        console.log("map && myBounds.length > 0:", map && myBounds.length > 0);
-        console.log("map", map);
-        */
 
         if (!map || !myBounds || myBounds.length < 1) {
             return;
@@ -89,7 +66,6 @@ const  MapFrame = () => {
             bounds.extend(new window.google.maps.LatLng(marker.lat, marker.lng));
         });
         // Fit the bounds to the map
-        console.log("Bounds before fitBounds:", bounds);
         map.fitBounds(bounds);
 
     }, [map, myBounds]);
@@ -99,7 +75,6 @@ const  MapFrame = () => {
     };
     const handleTextChange = (country) => {
         setSelectedCountry({ name: "" });
-        console.log(`Text changed: ${country}`);
     };
 
 
@@ -119,10 +94,24 @@ const  MapFrame = () => {
     }
 
     return isLoaded ? (
-        <div >
-            <Link to='/'>Login Page</Link>
-            <Link to='/visa'>Get Visa Info</Link>
-            <div style={{width:"500px"}}>
+        <div className={"map__container"}>
+            <img
+                src={'../assets/tp_logo_thin.png'}
+                alt="Trip Planner Logo"
+                className={"logo__map"}
+            />
+            <img
+                src={'../assets/tp_logo_mobile_small.png'}
+                alt="Trip Planner Logo"
+                className={"logo__map_small"}
+            />
+            <nav className={"map__nav"}>
+                <Link to='/' className={"nav__element"}>Login Page</Link>
+                <Link to='/visa' className={"nav__element"}>Get Visa Info</Link>
+            </nav>
+
+            <div className={"country__select__container"}>
+                <h5 className={"country__title"}>Select destination country:</h5>
                 <CountrySelect
                     value={selectedCountry}
                     onChange={handleCountryChange}
@@ -130,39 +119,33 @@ const  MapFrame = () => {
                     flush={false}
                 />
             </div>
-            <GoogleMap
-                mapContainerStyle={containerStyle}
-                center={countryCenter}
-                zoom={4}
-                mapTypeId={"terrain"}
-                onLoad={onLoad}
-                onUnmount={onUnmount}
-                gestureHandling={'auto'}
-                options={{streetViewControl: false}}
-            >
-                { /* Child components, such as markers, info windows, etc. */}
-                <Marker
-                    position={selectedMarker}
-                    options={{
-                        icon: CustomMarker,
-                }}
-                    zIndex={1000}
-                /> { /* Shows red marker in center of the map */}
-                {attractionsMarkers.map((el) => (<Marker key={el.lat} position={el}/>))}
-                <RenderCountry />
-            </GoogleMap>
-
-            <AttractionsListRender myBounds={myBounds} setMarkers={setAttractionsMarkers} markers={attractionsMarkers} setMarker={setSelectedMarker}/>
-
+            <div className={"content__container"}>
+                <GoogleMap
+                    mapContainerClassName={"map__render"}
+                    center={countryCenter}
+                    zoom={4}
+                    mapTypeId={"terrain"}
+                    onLoad={onLoad}
+                    onUnmount={onUnmount}
+                    gestureHandling={'auto'}
+                    options={{streetViewControl: false}}
+                >
+                    { /* Child components, such as markers, info windows, etc. */}
+                    <Marker
+                        position={selectedMarker}
+                        options={{
+                            icon: CustomMarker,
+                        }}
+                        zIndex={1000}
+                    /> { /* Shows red marker in center of the map */}
+                    {attractionsMarkers.map((el) => (<Marker key={el.lat} position={el}/>))}
+                    <RenderCountry />
+                </GoogleMap>
+                <AttractionsListRender myBounds={myBounds} setMarkers={setAttractionsMarkers} markers={attractionsMarkers} setMarker={setSelectedMarker}/>
+            </div>
         </div>
-
 
     ) : null;
 }
 
 export default React.memo(MapFrame); //Using memo improves performance for components that will look the same
-
-
-// IMPORTANT:Wyjebuje wszystko po wybraniu kraju
-//     onLoad={onLoad}
-//     center={countryCenter}

@@ -12,6 +12,11 @@ function GetVisaInfo() {
                 alt="Trip Planner Logo"
                 className={"logo__visa"}
             />
+            <img
+                src={'../assets/tp_logo_mobile_small.png'}
+                alt="Trip Planner Logo"
+                className={"logo__visa_small"}
+            />
             <nav className={"visa__nav"}>
                 <Link to='/' className={"nav__element"} >Login Page</Link>
                 <Link to='/map' className={"nav__element"}>Go to planner</Link>

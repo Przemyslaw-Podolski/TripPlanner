@@ -85,14 +85,21 @@ body{
     font-family: $font-lato;
     text-decoration: none;
     box-shadow: 0 3px 6px rgba(0, 0, 0, .16);
+    -webkit-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+
     &:hover{
       background-color: $color-primary-shadow;
+      transform: rotate(0.5deg);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.72);
+
     }
-    @include mobile {
-      &:hover{
-        background-color: $color-primary-shadow;
-      }
-    }
+    //@include mobile {
+    //  &:hover{
+    //    background-color: $color-primary-shadow;
+    //    transition: ease-in-out;
+    //  }
+    //}
   }
 
   .nav__link__disabled {
@@ -147,12 +154,18 @@ body{
       text-align: center;
       color: $color-light-grey;
       box-shadow: 0 3px 6px rgba(0, 0, 0, .16);
+      -webkit-transition: all 0.5s ease;
+      transition: all 0.5s ease;
       &:hover{
         background-color: $color-orange;
+        transform: rotate(0.5deg);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.72);
+
       }
       @include mobile {
         &:hover{
           background-color: $color-orange;
+          transform: rotate(0.5deg);
         }
       }
     }
