@@ -1,4 +1,4 @@
-![Trip_Planner_Logo](./assets/tp_logo.png)
+![Trip_Planner_Logo](./assets/tp_logo-removebg.png)
 
 # Trip Planner Application
 
